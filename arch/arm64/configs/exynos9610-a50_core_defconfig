@@ -5767,6 +5767,9 @@ CONFIG_SBITMAP=y
 CONFIG_FFSI=y
 CONFIG_SCHED_FFSI_GLUE=y
 CONFIG_FPSIMD_CORRUPTION_DETECT=y
+CONFIG_UCLAMP_TASK=y
+CONFIG_PROCESS_RECLAIM=y
+CONFIG_MQ_IOSCHED_DEADLINE=y
 
 # Kernel configurations for full DroidSpaces support
 # Copyright (C) 2026 ravindu644 <droidcasts@protonmail.com>
