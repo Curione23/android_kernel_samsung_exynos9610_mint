@@ -29,7 +29,7 @@
 			#address-cells = <2>;
 			#size-cells = <1>;
 
-			model = "Samsung A50 SWA OPEN rev04 board based on Exynos9610";
+			model = "SM-A50 Exynos9610@2.3GHz";
 
 			mif_pdata {
 				/* GPIOs for HW REV */
