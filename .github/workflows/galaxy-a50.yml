@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        type: [aosp-12-e, aosp-11-e]
+        type: [aosp-12-e, aosp-11-e, recovery-12-p]
     steps:
       - uses: actions/checkout@v4
 
@@ -27,38 +27,14 @@ jobs:
           VARIANT=$(echo ${{ matrix.type }} | cut -d '-' -f1)
           ANDROID=$(echo ${{ matrix.type }} | cut -d '-' -f2)
           SELINUX=$(echo ${{ matrix.type }} | cut -d '-' -f3)
+          
           ./build.sh --automated --device a50 --variant $VARIANT --android $ANDROID -$SELINUX --kernelsu
 
-      - name: Upload Kernel Zip
+      - name: Upload Kernel Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: kernel-release
-          path: out/Mint-*.zip
+          name: mint-kernel-${{ matrix.type }}
+          path: |
+            out/Mint-*.zip
+            out/Image
           if-no-files-found: error
-
-  # release:
-    # name: Create GitHub Release
-    # if: ${{ !contains(github.event.head_commit.message, '[skip rel]') }}
-    # needs: build
-    # runs-on: ubuntu-latest
-    # permissions:
-      # contents: write
-    # steps:
-      # - uses: actions/checkout@v4
-
-      # - name: Download Artifact
-        # uses: actions/download-artifact@v4
-        # with:
-          # name: kernel-release
-          # path: ./release
-
-      # - name: Upload release
-        # uses: softprops/action-gh-release@v1
-        # with:
-          # tag_name: mainline-${{ github.run_number }}_a50dx
-          # name: "Mint Stable (Build ${{ github.run_number }})"
-          # prerelease: true
-          # body_path: "./tools/make/release/a50-release.md"
-          # files: ./release/*.zip
-        # env:
-          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
